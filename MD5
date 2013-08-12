@@ -1,0 +1,12 @@
+0dd61aeb0798529ba51a06013febc16c *DESCRIPTION
+f2a03a58cd81a5bfe12cfaca75ded3e0 *NAMESPACE
+bd1f003356cce64cb82b295974f994d2 *NEWS
+93d7e1bb0a805d53562e18c29bc26a1a *R/HotDeckImputation.R
+8fb280a6be0d5ae8f0a47f4aba948d28 *man/HotDeckImputation-package.Rd
+66d627009fb1f01b4f8b0f452576a2d2 *man/impute.NN_HD.Rd
+badf2457bdaca7bf227485487e8a15de *man/impute.mean.Rd
+e6a961c3dbfac0b33bc9e6fe9891d4e0 *man/match.d_r_vam.Rd
+5987d5eeab952bb426a556eb6eb88cad *man/reweight.data.Rd
+bb3ddfd4decf4b0a9b1b12d2f4c6cfe3 *src/Distmatrix.c
+c1adf5b9870469abf3ee640bf887725a *src/VAM.c
+4442260bb06f5ce4d5f6b8f6d937c45b *src/minheuristics.c
