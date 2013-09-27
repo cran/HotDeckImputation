@@ -7,7 +7,7 @@
 	Email:			Dieter.Joenssen@TU-Ilmenau.de
 	Created:		   14 May 2013
 	Last Update: 	10 August 2013
-	Description:	C functions to usefull for Hot deck Imputation
+	Description:	C functions to useful for Hot deck Imputation
 */
 
 //Begin preamble
@@ -95,7 +95,7 @@ void c_test_NA(double *data, int *min, int *nin)
 
 //function that reweights the data before distance calculation
 //this reduces the required computations for calculating a weighted distance
-//at the expense of cloneing the data matrix
+//at the expense of cloning the data matrix
 void reweight_data(double *data, int *n, int *m,double *weights )
 {
 	int current_n,current_m,current_pos_m;
@@ -115,50 +115,7 @@ void reweight_data(double *data, int *n, int *m,double *weights )
 }
 
 // calculates the distances required for hot deck imputation
-// minkovski_factor needs to be implemented, currently only manhattan distance used
-/*
-void c_dist_hot_deck(
-				double *distances,
-				double *data,
-				int *n,
-				int *m,
-				int *donors,
-				int *recipients,
-				int *n_donors,
-				int *n_recipients)
-{
-	int current_donor,current_recipient,current_m,current_pos_m;
-	int i = 0;
-	int m_denom = m[0];
-	for(current_recipient = 0;current_recipient<n_recipients[0];current_recipient++)
-	{
-		for(current_donor=0; current_donor<n_donors[0];current_donor++)
-		{
-			for(current_m=0;current_m < m[0];current_m++)
-			{
-            current_pos_m=(n[0] * current_m);
-				if(ISNA(data[recipients[current_recipient] + current_pos_m]) |
-				ISNA(data[donors[current_donor] + current_pos_m]))
-				{
-					m_denom = m_denom -1;
-				}
-				else
-				{
-					distances[i]= distances[i] + 
-					fabs(data[recipients[current_recipient] + current_pos_m] - 
-					data[donors[current_donor] + current_pos_m]);
-				}
-			}
-			if(m_denom == 0)
-			{distances[i] = DBL_MAX;}
-			else
-			{distances[i] = distances[i] * m[0] / m_denom;}
-			i++;
-			m_denom = m[0];
-		}
-	}
-}
-*/
+// minkovski_factor needs to be implemented, currently only Manhattan distance used
 //calculates required distance matrix
 void c_dist_hot_deck(
       		double *distances,
@@ -177,7 +134,7 @@ void c_dist_hot_deck(
    
    
    
-   if(p[0]==1)//manhattan distance
+   if(p[0]==1)//Manhattan distance
    {
       for(current_recipient = 0;current_recipient<n_recipients[0];current_recipient++)
       {
@@ -207,7 +164,7 @@ void c_dist_hot_deck(
    		}
    	}
    }
-   if(p[0]==2)//euklidean
+   if(p[0]==2)//euclidean
    {
       for(current_recipient = 0;current_recipient<n_recipients[0];current_recipient++)
       {
@@ -290,21 +247,9 @@ void c_impute_NN_HD(double *data, int *n, int *m, int *recipients, int *n_recipi
       }
    }
    
-/*   legacy code
-   for(counter = 0; counter<n_recipients[0];counter++)
-   {
-      for(current_m = 0; current_m < m[0];current_m++)
-      {
-         if(ISNA(data[recipients[counter] + (n[0] * current_m)]))
-         {
-            data[recipients[counter] + (n[0] * current_m)] = data[donors[counter] + (n[0] * current_m)];
-         }
-      }
-   }
-   */
 }
 
-//calculates the columb means of complete cases
+//calculates the column means of complete cases
 void c_colMeans(double *data, int *n, int *m, double *means)
 {
    int current_n, current_m,current_pos_m;

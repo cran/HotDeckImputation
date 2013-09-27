@@ -7,21 +7,21 @@ This function imputes the column mean of the complete cases for the missing case
 Utilized by \code{impute.NN_HD} as a method for dealing with missing values in distance calculation.  
 }
 \usage{
-impute.mean(data = NULL)
+impute.mean(DATA = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{data}{Data with missing values.}
+  \item{DATA}{Data with missing values.}
 }
 %%\details{%%  ~~ If necessary, more details than the description above ~~}
 
-\value{Returns an imputed data matrix with the same dimensions as \code{data}.}
+\value{Returns an imputed data matrix with the same dimensions as \code{DATA}.}
 
 \references{
 Little, R.J.A and Rubin, D.B. (2002) \emph{Statistical Analysis with Missing Data}. Hoboken: Wiley.
 }
 
-\author{Dieter William Joenssen \email{Dieter.Joenssen@TU-Ilmenau.de}}
+\author{Dieter William Joenssen \email{Dieter.Joenssen@googlemail.com}}
 
 %%\note{}
 
@@ -38,7 +38,7 @@ Y<-matrix(sample(0:9,replace=TRUE,size=6*3),nrow=6)
 Y[-1,][sample(1:12,size=6)]<-NA
 
 #Impute the colMeans of Y
-impute.mean(data=Y)
+impute.mean(DATA=Y)
 }
 
 \keyword{ NA }

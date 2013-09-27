@@ -1,18 +1,19 @@
 Package: HotDeckImputation
 Type: Package
 Title: Hot Deck Imputation Methods for Missing Data.
-Version: 0.1.0
-Date: 2013-08-12
+Version: 1.0.0
+Date: 2013-09-27
 Depends: R (>= 3.0.0)
-Author: Dieter William Joenssen
-Maintainer: Dieter William Joenssen <Dieter.Joenssen@TU-Ilmenau.de>
+Maintainer: Dieter William Joenssen <Dieter.Joenssen@googlemail.com>
 Authors@R: c(person("Dieter William", "Joenssen", role = c("aut", "cre", "cph"),
-                          email = "Dieter.Joenssen@TU-Ilmenau.de"))
+                          email = "Dieter.Joenssen@googlemail.com"))
 Description: This package provides hot deck imputation methods to resolve missing data.
 License: GPL-3
-URL: http://www.r-project.org,
+Imports: Rglpk
+URL: http://cran.r-project.org/web/packages/HotDeckImputation/,
         http://www.tu-ilmenau.de/qme/mitarbeiter/dieter-w-joenssen/
-Packaged: 2013-08-12 11:56:25 UTC; Dieter
+Packaged: 2014-09-27 15:48:54 UTC; Dieter
+Author: Dieter William Joenssen [aut, cre, cph]
 NeedsCompilation: yes
 Repository: CRAN
-Date/Publication: 2013-08-12 15:31:56
+Date/Publication: 2014-09-28 10:08:15

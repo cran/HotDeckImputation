@@ -1,2 +1,7 @@
+### version 1.0.0 (September 27 2014)
+- Added the ODD Hot-Deck
+- Added the Sequential Hot-Deck
+- Added the CPS Sequential Hot-Deck
+- Updated documentation
 ### version 0.1.0 (August 11 2013)
 -First release version of HotDeckImputation

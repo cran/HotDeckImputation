@@ -1,14 +1,14 @@
-\name{match.d_r_vam}
-\alias{match.d_r_vam}
+\name{match.d_r_odd}
+\alias{match.d_r_odd}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Donor-Recipient Matching via Vogel's Approximation Method
+Donor-Recipient Matching via Optimal Donor Distribution Method
 }
 \description{
-A function that performs Vogel's approximation method.  A heuristic to reduce the total sum of donor-recipient distances.
+A function that performs the optimal donor distribution method.  GLPK is used to find the optimal solution to the integer program.
 }
 \usage{
-match.d_r_vam(distance = NULL, recipients=NULL, donors=NULL, donor_limit=NULL)
+match.d_r_odd(distance = NULL, recipients=NULL, donors=NULL, donor_limit=NULL)
 }
 \arguments{
   \item{distance}{A distance matrix of dimensions length(donors) * length(recipients)}
@@ -23,7 +23,7 @@ Domschke, W. (1995) \emph{Logistik: Transport}. Munich: Oldenbourg. [in German]
 }
 \author{Dieter William Joenssen \email{Dieter.Joenssen@googlemail.com}}
 
-\seealso{\code{\link{impute.NN_HD}}}
+\seealso{\code{\link{impute.NN_HD}}, \code{\link{match.d_r_vam}}}
 
 
 \examples{
@@ -43,7 +43,7 @@ set.seed(421)
    donor_limit<-rep(1,length(donors))
 
 #perform the matching
-match.d_r_vam(distance=distance,recipients=recipients,donors=donors,
+match.d_r_odd(distance=distance,recipients=recipients,donors=donors,
    donor_limit=donor_limit)
 }
 \keyword{ optimize }

@@ -11,14 +11,14 @@ New concepts such as the optimal distribution of donors are also available.
 }
 
 \usage{
-impute.NN_HD(data = NULL, distance = "man", weights = "range", attributes = "sim",
+impute.NN_HD(DATA = NULL, distance = "man", weights = "range", attributes = "sim",
  comp = "rw_dist", donor_limit = Inf, optimal_donor = "no",
  list_donors_recipients = NULL)
 }
 
 
 \arguments{
-  \item{data}{Data containing missing values.}
+  \item{DATA}{Data containing missing values.}
   \item{distance}{Distance type to use when searching for the nearest neighbor.  See the details section for options.}
   \item{weights}{Weights by which the variables should be scaled.  See the details section for options.}
   \item{attributes}{Determines how attributes should be handled.  Currently only "sim", meaning donor and recipient pools are disjoint, is implemented.}
@@ -65,33 +65,38 @@ impute.NN_HD(data = NULL, distance = "man", weights = "range", attributes = "sim
 }
 \strong{argument:} \code{optimal_donor} is a single string interpreted by its value:
 \itemize{
-  \item \emph{"no"}, donor-recipient matching is performed in order by which the recipients appear in the data
+  \item \emph{"no"}, donor-recipient matching is performed in order by which the recipients appear in the data (fastest)
   \item \emph{"rand"}, donor-recipient matching is performed in a random recipient-order
   \item \emph{"mmin"}, donor-recipient matching is performed by the matrix minimum method (sequence independent)
   \item \emph{"modifvam"}, donor-recipient matching is performed by a modified (only columns considered) Vogel's approximation method (sequence independent)
   \item \emph{"vam"}, donor-recipient matching is performed by the Vogel's approximation method (sequence independent)
   \item \emph{"modi"}, donor-recipient matching is performed modified distribution method (sequence independent, not implemented)
+  \item \emph{"odd"}, donor-recipient matching is performed via the optimal donor distribution method (sequence independent, best results)
 }
 }
 \value{
-An imputed data matrix the same size as the input \code{data}.
+An imputed data matrix the same size as the input \code{DATA}.
 }
 
 \references{
 Andridge, R.R. and Little, R.J.A. (2010) A Review of Hot Deck Imputation for Survey Non-response. \emph{International Statistical Review}. \bold{78}, 40--64. 
 
-Bankhofer, U. and Joenssen, D.W. (2013) On limiting donor usage for imputation of missing data via hot deck methods. In: M. Spiliopoulou, L. Schmidt-Thieme, and R. Jannings (Eds.): \emph{Data Analysis, Machine Learning and Knowledge Discovery. Studies in Classification, Data Analysis and Knowledge Organization}, 3--10. Berlin/Heidelberg: Springer. (forthcoming)
+Bankhofer, U. and Joenssen, D.W. (2014) On Limiting Donor Usage for Imputation of Missing Data via Hot Deck Methods. In: M. Spiliopoulou, L. Schmidt-Thieme, and R. Jannings (Eds.): \emph{Data Analysis, Machine Learning and Knowledge Discovery. Studies in Classification, Data Analysis and Knowledge Organization}, 3--11. Berlin/Heidelberg: Springer.
 
 Domschke, W. (1995) \emph{Logistik: Transport}. Munich: Oldenbourg. [in German]
 
 Ford, B. (1983) An Overview of Hot Deck Procedures. In: W. Madow, H. Nisselson and I. Olkin (Eds.): \emph{Incomplete Data in Sample Surveys}. New York: Academic Press, 185--207.
+
+Joenssen, D.W. (2015) Donor Limited Hot Deck Imputation: A Constrained Optimization Problem. In: B. Lausen, S. Krolak-Schwerdt, and M. B\"ohmer (Eds.): \emph{Data Science, Learning by Latent Structures, and Knowledge Discovery. Studies in Classification, Data Analysis and Knowledge Organization}, pages tba. Berlin/Heidelberg: Springer. (in press)
+
+Joenssen, D.W. and Bankhofer, U. (2012) Donor Limited Hot Deck Imputation: Effects on Parameter Estimation. \emph{Journal of Theoretical and Applied Computer Science}. \bold{6}, 58--70. 
 
 Kalton, G. and Kasprzyk, D. (1986) The Treatment of Missing Survey Data. \emph{Survey Methodology}. \bold{12}, 1--16.
 
 Sande, I. (1983) Hot-Deck Imputation Procedures. In: W. Madow, H. Nisselson and I. Olkin (Eds.): \emph{Incomplete Data in Sample Surveys}. New York: Academic Press, 339--349.
 }
 
-\author{Dieter William Joenssen \email{Dieter.Joenssen@TU-Ilmenau.de}}
+\author{Dieter William Joenssen \email{Dieter.Joenssen@googlemail.com}}
 
 %%\note{%%  ~~further notes~~}
 
@@ -108,12 +113,15 @@ Y<-matrix(sample(x=1:100,size=10*4),nrow=10)
 Y[-c(1:5),-1][sample(1:15,size=5)]<-NA
 
 #Impute using various different (arbitrarily chosen) settings
-impute.NN_HD(data=Y,distance="man",weights="var")
+impute.NN_HD(DATA=Y,distance="man",weights="var")
 
-impute.NN_HD(data=Y,distance=2,weights=rep(.5,4),donor_limit=2,optimal_donor="mmin")
+impute.NN_HD(DATA=Y,distance=2,weights=rep(.5,4),donor_limit=2,optimal_donor="mmin")
 
-impute.NN_HD(data=Y,distance="eukl",weights=.25,comp="mean",donor_limit=.2,
+impute.NN_HD(DATA=Y,distance="eukl",weights=.25,comp="mean",donor_limit=.2,
  optimal_donor="vam")
+ 
+impute.NN_HD(DATA=Y,distance="eukl",weights=.25,comp="mean",donor_limit=1,
+ optimal_donor="odd")
 }
 
 \keyword{ NA }
