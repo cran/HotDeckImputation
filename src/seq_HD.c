@@ -1,7 +1,7 @@
 #include <R.h>
 #include <Rinternals.h>
 #include <Rmath.h>
-
+/*
 SEXP SeqHD_REAL(SEXP Rdata)
 {
    int col, i, k, N, M, pos;
@@ -25,6 +25,68 @@ SEXP SeqHD_REAL(SEXP Rdata)
       }
    }
    return R_NilValue;
+}
+*/
+
+SEXP SeqHD_REAL(SEXP Rdata, SEXP RInitialvalue, SEXP RNAValues)
+{
+  int col, i, k, N, M, pos;
+  SEXP Rdimdata;
+  double *data, *NAValues, *initval;
+  Rdimdata = getAttrib(Rdata, R_DimSymbol);
+  N = INTEGER(Rdimdata)[0];
+  M = INTEGER(Rdimdata)[1];
+  initval = REAL(RInitialvalue);
+  NAValues = REAL(RNAValues);
+  
+  int *buffer_vals = malloc(M * sizeof(int));
+  
+  for(k=0;k<M;k++)
+  {
+    buffer_vals[k]=initval[k];
+  }
+  
+  data = REAL(Rdata);
+  
+  for(k=0;k<M;k++)
+  {
+    col=N*k;
+    if(ISNA(NAValues[k]))
+    {
+      for(i=0;i<N;i++)
+      {
+        pos = i+col;
+        //printf("data %f, NA %f \n", data[pos],NAValues[k]);
+        if(ISNA(data[pos]))
+        {
+          //printf("equal \n");
+          data[pos]= buffer_vals[k];
+        }
+        else{
+          //printf("not equal \n");
+          buffer_vals[k]=data[pos];}
+      }
+    }
+    else
+    {
+      for(i=0;i<N;i++)
+      {
+        pos = i+col;
+        //printf("data %f, NA %f \n", data[pos],NAValues[k]);
+        if(data[pos]==NAValues[k])
+        {
+          //printf("equal \n");
+          data[pos]= buffer_vals[k];
+        }
+        else{
+          //printf("not equal \n");
+          buffer_vals[k]=data[pos];}
+      }
+    }
+  }
+  
+  free(buffer_vals);
+  return R_NilValue;
 }
 
 SEXP SeqHD_INTEGER(SEXP Rdata, SEXP RInitialvalue, SEXP RNAValues)
@@ -58,6 +120,8 @@ SEXP SeqHD_INTEGER(SEXP Rdata, SEXP RInitialvalue, SEXP RNAValues)
          else{buffer_vals[k]=data[pos];}
       }
    }
+   
+   free(buffer_vals);
    return R_NilValue;
 }
 

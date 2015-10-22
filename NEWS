@@ -1,3 +1,21 @@
+### Version 1.1.0 (October 21 2015)
+- impute.NN_HD now also takes a data.frame as arguement... does some fancy conversion of strings and factors so distances can be computed
+- impute.SEQ_HD can now handle a matrix of real values
+- impute.NN_HD option comp=="rseq" now available
+- impute.NN_HD option distance=="tscheb" now available
+- impute.NN_HD option distance=="mahal" now available
+- impute.NN_HD option optimal_donor=="modi" now alias for optimal_donor=="odd"
+- updated websites
+### Version 1.0.3 (September 02 2015)
+- impute.NN_HD now coerces its arguements to data matrix, updated documentation to reflect (ortherwise using a data frame would lead to a curious error)
+### Version 1.0.2 (February 17 2015)
+- Fixed: "Malformed Title field: should not end in a period."
+- Fixed: memory leak in SeqHD_INTEGER
+- did some modularization behind the scenes
+### version 1.0.1 (October 05 2014)
+- Added the diagnose argument to impute.NN_HD()
+- reworked some impute.NN_HD() code
+- added some documentation
 ### version 1.0.0 (September 27 2014)
 - Added the ODD Hot-Deck
 - Added the Sequential Hot-Deck

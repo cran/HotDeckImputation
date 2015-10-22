@@ -13,7 +13,7 @@ impute.CPS_SEQ_HD(DATA = NULL, covariates = NULL, initialvalues = 0,
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{DATA}{Data containing missing values. Should be a matrix of integers.}
+  \item{DATA}{Data containing missing values. Should be a matrix of numbers.}
   \item{covariates}{Vector containing the covariates (columns that should be used to create the imputation classes). If \code{is.null(covariates) | length(covariates)==0} this function defaults to \code{impute.SEQ_HD}. See Section: Note for further Details.}
   \item{initialvalues}{The initial values for the start-up process of the imputation. Should be \code{"integer"} and \code{length(initialvalues)==1 | length(initialvalues)==dim(DATA)[2]}. The default of \code{0} is not normally a good value.}
   \item{navalues}{NA code for each variable that should be imputed. Should be \code{"integer"} and \code{length(initialvalues)==1 | length(initialvalues)==dim(DATA)[2]}. Default is R's NA value.}
@@ -29,6 +29,8 @@ An imputed data matrix the same size as the input \code{DATA}.
 }
 \references{
 Hanson, R.H. (1978) The Current Population Survey: Design and Methodology. \emph{Technical Paper No. 40 }. U.S. Bureau of the Census.
+
+Joenssen, D.W. (2015) Hot-Deck-Verfahren zur Imputation fehlender Daten -- Auswirkungen des Donor-Limits. Ilmenau: Ilmedia. [in German, Dissertation]
 
 Joenssen, D.W. and Bankhofer, U. (2012) Donor Limited Hot Deck Imputation: Effects on Parameter Estimation. \emph{Journal of Theoretical and Applied Computer Science}. \bold{6}, 58--70. 
 

@@ -19,6 +19,8 @@ impute.mean(DATA = NULL)
 
 \references{
 Little, R.J.A and Rubin, D.B. (2002) \emph{Statistical Analysis with Missing Data}. Hoboken: Wiley.
+
+Joenssen, D.W. (2015) Hot-Deck-Verfahren zur Imputation fehlender Daten -- Auswirkungen des Donor-Limits. Ilmenau: Ilmedia. [in German, Dissertation]
 }
 
 \author{Dieter William Joenssen \email{Dieter.Joenssen@googlemail.com}}

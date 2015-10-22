@@ -13,12 +13,12 @@ New concepts such as the optimal distribution of donors are also available.
 \usage{
 impute.NN_HD(DATA = NULL, distance = "man", weights = "range", attributes = "sim",
  comp = "rw_dist", donor_limit = Inf, optimal_donor = "no",
- list_donors_recipients = NULL)
+ list_donors_recipients = NULL, diagnose = NULL)
 }
 
 
 \arguments{
-  \item{DATA}{Data containing missing values.}
+  \item{DATA}{Data containing missing values. Must either be \code{data.frame}, then factors and strings will be recoded using \code{model.matrix} or Will be coerced by \code{data.matrix}.}
   \item{distance}{Distance type to use when searching for the nearest neighbor.  See the details section for options.}
   \item{weights}{Weights by which the variables should be scaled.  See the details section for options.}
   \item{attributes}{Determines how attributes should be handled.  Currently only "sim", meaning donor and recipient pools are disjoint, is implemented.}
@@ -26,6 +26,7 @@ impute.NN_HD(DATA = NULL, distance = "man", weights = "range", attributes = "sim
   \item{donor_limit}{Limits how often a donor may function as such.  See the details section for options.}
   \item{optimal_donor}{Defines how the optimal donor is found when a donor limit is used.  See the details section for options.}
   \item{list_donors_recipients}{Option for manually specifying the donor and recipient pools via a list with components "donors" and "recipients".}
+  \item{diagnose}{Option to recover the generated distances and donor-recipient matches. See details section for usage.}
 }
 \details{
 \strong{argument:} \code{distance} can be defined as:
@@ -36,8 +37,8 @@ impute.NN_HD(DATA = NULL, distance = "man", weights = "range", attributes = "sim
   \itemize{
   \item \emph{"man"}, Manhattan distance
   \item \emph{"eukl"}, Euclidean distance
-  \item \emph{"tscheb"}, Chebyshev distance (not implemented)
-  \item \emph{"mahal"}, Mahalanobis distance (not implemented)
+  \item \emph{"tscheb"}, Chebyshev distance
+  \item \emph{"mahal"}, Mahalanobis distance (covariance matrix calculated after missing data compensation, incompatible with comp="rw_dist")
   }
 }
 
@@ -54,7 +55,7 @@ impute.NN_HD(DATA = NULL, distance = "man", weights = "range", attributes = "sim
 \itemize{
   \item \emph{"rw_dist"}, total distance is reweighted by number of distances that may be computed
   \item \emph{"mean"}, mean imputation is performed before distance calculation
-  \item \emph{"rseq"}, random hot deck imputation, each variable sequentially (not implemented)
+  \item \emph{"rseq"}, random hot deck imputation, each variable sequentially (uses impute.SEQ_HD)
   \item \emph{"rsim"}, random hot deck imputation, each variable simultaneously (not implemented)
 }
 \strong{argument:} \code{donor_limit} is a single number interpreted by its range:
@@ -70,12 +71,22 @@ impute.NN_HD(DATA = NULL, distance = "man", weights = "range", attributes = "sim
   \item \emph{"mmin"}, donor-recipient matching is performed by the matrix minimum method (sequence independent)
   \item \emph{"modifvam"}, donor-recipient matching is performed by a modified (only columns considered) Vogel's approximation method (sequence independent)
   \item \emph{"vam"}, donor-recipient matching is performed by the Vogel's approximation method (sequence independent)
-  \item \emph{"modi"}, donor-recipient matching is performed modified distribution method (sequence independent, not implemented)
   \item \emph{"odd"}, donor-recipient matching is performed via the optimal donor distribution method (sequence independent, best results)
 }
+\strong{argument:} \code{diagnose} should be:
+\itemize{
+  \item \emph{\code{NULL}}, no diagnostics will be returned.
+  \item \emph{character string}, desired variable name under which the diagnostics will be saved to \code{.GlobalEnv}. The following character strings will however default to \code{NULL} with a warning:
+  "if", "else", "repeat", "while", "function", "for", "in", "next", "break", "TRUE", "FALSE", "NULL", "Inf", "NaN", "NA", "NA_integer_", "NA_real_", "NA_complex_", "NA_character_", "c", "q", "s", "t", "C", "D", "F", "I", "T"
+  \item \emph{anything else}, defaults to \code{NULL} with a warning.
+  }
+Should be a character string of the desired variable name which will be created in \code{.GlobalEnv}
 }
 \value{
 An imputed data matrix the same size as the input \code{DATA}.
+If the \code{diagnose} option is used correctly, a list containing the following components will be created in the workspace:
+\item{distances }{the donor-recipient distance matrix used for matching}
+\item{list_donors_recipients }{the resultant recipient-donor matches}
 }
 
 \references{
@@ -87,7 +98,9 @@ Domschke, W. (1995) \emph{Logistik: Transport}. Munich: Oldenbourg. [in German]
 
 Ford, B. (1983) An Overview of Hot Deck Procedures. In: W. Madow, H. Nisselson and I. Olkin (Eds.): \emph{Incomplete Data in Sample Surveys}. New York: Academic Press, 185--207.
 
-Joenssen, D.W. (2015) Donor Limited Hot Deck Imputation: A Constrained Optimization Problem. In: B. Lausen, S. Krolak-Schwerdt, and M. B\"ohmer (Eds.): \emph{Data Science, Learning by Latent Structures, and Knowledge Discovery. Studies in Classification, Data Analysis and Knowledge Organization}, pages tba. Berlin/Heidelberg: Springer. (in press)
+Joenssen, D.W. (2015) Donor Limited Hot Deck Imputation: A Constrained Optimization Problem. In: B. Lausen, S. Krolak-Schwerdt, and M. B\"ohmer (Eds.): \emph{Data Science, Learning by Latent Structures, and Knowledge Discovery. Studies in Classification, Data Analysis and Knowledge Organization}, pages 319--328. Berlin/Heidelberg: Springer.
+
+Joenssen, D.W. (2015) Hot-Deck-Verfahren zur Imputation fehlender Daten -- Auswirkungen des Donor-Limits. Ilmenau: Ilmedia. [in German, Dissertation]
 
 Joenssen, D.W. and Bankhofer, U. (2012) Donor Limited Hot Deck Imputation: Effects on Parameter Estimation. \emph{Journal of Theoretical and Applied Computer Science}. \bold{6}, 58--70. 
 
@@ -117,11 +130,14 @@ impute.NN_HD(DATA=Y,distance="man",weights="var")
 
 impute.NN_HD(DATA=Y,distance=2,weights=rep(.5,4),donor_limit=2,optimal_donor="mmin")
 
-impute.NN_HD(DATA=Y,distance="eukl",weights=.25,comp="mean",donor_limit=.2,
- optimal_donor="vam")
- 
 impute.NN_HD(DATA=Y,distance="eukl",weights=.25,comp="mean",donor_limit=1,
  optimal_donor="odd")
+ 
+#Recover some diagnostics
+impute.NN_HD(DATA=Y,distance="eukl",weights=.25,comp="mean",donor_limit=1,
+ optimal_donor="odd",diagnose = "diagnostics")
+# look at the diagnostics
+ diagnostics
 }
 
 \keyword{ NA }

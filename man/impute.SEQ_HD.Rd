@@ -29,6 +29,8 @@ An imputed data matrix the same size as the input \code{DATA}.
 \references{
 Hanson, R.H. (1978) The Current Population Survey: Design and Methodology. \emph{Technical Paper No. 40 }. U.S. Bureau of the Census.
 
+Joenssen, D.W. (2015) Hot-Deck-Verfahren zur Imputation fehlender Daten -- Auswirkungen des Donor-Limits. Ilmenau: Ilmedia. [in German, Dissertation]
+
 Joenssen, D.W. and Bankhofer, U. (2012) Donor Limited Hot Deck Imputation: Effects on Parameter Estimation. \emph{Journal of Theoretical and Applied Computer Science}. \bold{6}, 58--70. 
 
 Joenssen, D.W. and Muellerleile, T. (2014) Fehlende Daten bei Data-Mining. \emph{HMD Praxis der Wirtschaftsinformatik}. \bold{51}, 458--468, 2014. doi: 10.1365/s40702-014-0038-8 [in German]

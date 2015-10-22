@@ -441,7 +441,7 @@ void c_VAM(int *distribution, double *distances, int *supply, int *demand, int *
    //test if there are any zero supplys or demand
    int zerocounter_demand=0,sum_demand=0;
    int zerocounter_supply=0,sum_supply=0;
-   int i,j, current_pos, col_offset;
+   int i=0,j=0, current_pos=0, col_offset=0;
    double max_delta,current_delta;
    int min_position_max_delta_row=-1,min_position_max_delta_col=-1;
    

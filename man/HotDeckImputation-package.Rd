@@ -12,8 +12,8 @@ A key aspect of this package is the implementation of the commonly advocated don
 \tabular{ll}{
 Package: \tab HotDeckImputation\cr
 Type: \tab Package\cr
-Version: \tab 1.0.0\cr
-Date: \tab 2014-09-27\cr
+Version: \tab 1.1.0\cr
+Date: \tab 2014-10-21\cr
 License: \tab GPL-3\cr
 }
 \code{HotDeckImputation} is the ever expanding implementation of hot deck imputation methods, such as the nearest neighbor, the CPS-sequential and random hot deck.  
@@ -41,6 +41,8 @@ Domschke, W. (1995) \emph{Logistik: Transport}. Munich: Oldenbourg. [in German]
 Ford, B. (1983) An Overview of Hot Deck Procedures. In: W. Madow, H. Nisselson and I. Olkin (Eds.): \emph{Incomplete Data in Sample Surveys}. New York: Academic Press, 185--207.
 
 Joenssen, D.W. (2015) Donor Limited Hot Deck Imputation: A Constrained Optimization Problem. In: B. Lausen, S. Krolak-Schwerdt, and M. B\"ohmer (Eds.): \emph{Data Science, Learning by Latent Structures, and Knowledge Discovery. Studies in Classification, Data Analysis and Knowledge Organization}, pages tba. Berlin/Heidelberg: Springer. (in press)
+
+Joenssen, D.W. (2015) Hot-Deck-Verfahren zur Imputation fehlender Daten -- Auswirkungen des Donor-Limits. Ilmenau: Ilmedia. [in German, Dissertation]
 
 Joenssen, D.W. and Bankhofer, U. (2012) Donor Limited Hot Deck Imputation: Effects on Parameter Estimation. \emph{Journal of Theoretical and Applied Computer Science}. \bold{6}, 58--70. 
 

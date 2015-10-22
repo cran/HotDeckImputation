@@ -27,6 +27,9 @@ void reweight_data( double *data, int *n, int *m, double *weights);//
 void c_dist_hot_deck( double *distances, double *data, int *n, int *m, int *donors,
 						int *recipients, int *n_donors, int *n_recipients,double *p);//
 
+void c_dist_hot_deck_tscheb( double *distances, double *data, int *n, int *m, int *donors,
+                      int *recipients, int *n_donors, int *n_recipients);//
+
 void c_impute_NN_HD( double *data, int *n, int *m, int *recipients, int *n_recipients,//
 						int *donors);
 void c_colMeans( double *data, int *n, int *m, double *means);//
@@ -115,8 +118,7 @@ void reweight_data(double *data, int *n, int *m,double *weights )
 }
 
 // calculates the distances required for hot deck imputation
-// minkovski_factor needs to be implemented, currently only Manhattan distance used
-//calculates required distance matrix
+//calculates required distance matrix given a minkovski factor p
 void c_dist_hot_deck(
       		double *distances,
 				double *data,
@@ -226,6 +228,61 @@ void c_dist_hot_deck(
    		}
    	}
    }
+}
+
+// calculates the distances required for hot deck imputation
+// special case for tschebyscheff distances
+//calculates required distance matrix
+void c_dist_hot_deck_tscheb(
+      double *distances,
+      double *data,
+      int *n,
+      int *m,
+      int *donors,
+      int *recipients,
+      int *n_donors,
+      int *n_recipients
+  )
+{
+    int current_donor,current_recipient,current_m,current_pos_m;
+    int i = 0;
+    int m_denom = m[0];
+    double current_distance,current_max;
+    int pos_d,pos_r;
+    
+    for(current_recipient = 0;current_recipient<n_recipients[0];current_recipient++)
+    {
+      for(current_donor=0; current_donor<n_donors[0];current_donor++)
+      {
+        current_max = current_distance = 0;
+        
+        for(current_m=0;current_m < m[0];current_m++)
+        {
+          current_pos_m=(n[0] * current_m);
+          pos_d = donors[current_donor] + current_pos_m;
+          pos_r = recipients[current_recipient] + current_pos_m;
+          if(ISNA(data[pos_r]) |  ISNA(data[pos_d]))
+          {
+            m_denom = m_denom -1;
+          }
+          else
+          {
+            current_distance = fabs(data[pos_r] - data[pos_d]);
+            
+            if(current_distance > current_max)
+            {
+              current_max = current_distance;
+            }
+          }
+        }
+        if(m_denom == 0)
+        {current_max = DBL_MAX;}
+        distances[i] = current_max;
+        i++;
+        m_denom = m[0];
+      }
+    }
+
 }
 
 //performs actual imputation of values

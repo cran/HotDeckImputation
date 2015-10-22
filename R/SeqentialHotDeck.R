@@ -1,3 +1,19 @@
+#    Do not delete!
+#  File name     SeqentialHotDeck.R
+#  Part of:		   HotDeckImputation (GNU R contributed package)
+#  Author:			Dieter William Joenssen
+#  Copyright:		Dieter William Joenssen
+#  Email:			Dieter.Joenssen@googlemail.com
+#  Created:		   01 September 2014
+#  Last Update: 	07 October 2014
+#  Description:	R code for Package HotDeckImputation. Implemented functionions include following:
+#                 Topics:
+#                 -impute.SEQ_HD          ~ The original sequential hot deck imputation algorithm
+#                 -impute.CPS_SEQ_HD      ~ The cps sequential hot deck, sequential imputation within adjustment cells
+#                 Hidden functions:
+#                 -.deepcopy              ~ creates a deep copy of an R object, forces memory allocation
+
+#The original sequential hot deck imputation algorithm
 impute.SEQ_HD<-function(DATA=NULL,initialvalues=0, navalues=NA, modifyinplace = TRUE)
 {
    imputeables<-seq_len(dim(DATA)[2])
@@ -25,12 +41,11 @@ impute.SEQ_HD<-function(DATA=NULL,initialvalues=0, navalues=NA, modifyinplace = 
          stop("length(navalues) must equal 1 or dim(DATA)[2]\n")
       }
    }
-   
-   mode(initialvalues)<-"integer"
-   mode(navalues)<-"integer"
-   
+
    if(storage.mode(DATA)=="integer")
    {
+     mode(initialvalues)<-"integer"
+     mode(navalues)<-"integer"
       if(!modifyinplace)
       {
         DATA<- .deepcopy(DATA)
@@ -39,12 +54,25 @@ impute.SEQ_HD<-function(DATA=NULL,initialvalues=0, navalues=NA, modifyinplace = 
    }
    else
    {
-      stop("currently only matrices are acceptable\n")
+     if(storage.mode(DATA)=="double")
+     {
+       mode(initialvalues)<-"double"
+       mode(navalues)<-"double"
+       if(!modifyinplace)
+       {
+         DATA<- .deepcopy(DATA)
+       }
+       .Call("SeqHD_REAL", DATA,  initialvalues, navalues)
+       
+     }
+     else{
+       stop("currently only matrices are acceptable\n") 
+     }
    }
    return(DATA)
 }
 
-
+#The cps sequential hot deck, sequential imputation within adjustment cells
 impute.CPS_SEQ_HD<-function(DATA=NULL,covariates=NULL,initialvalues=0, navalues=NA, modifyinplace = TRUE)
 {
    if(is.null(covariates)|(length(covariates)==0))
@@ -100,7 +128,7 @@ impute.CPS_SEQ_HD<-function(DATA=NULL,covariates=NULL,initialvalues=0, navalues=
    return(DATA)
 }
 
-
+#creates a deep copy of an R object, forces memory allocation
 .deepcopy<-function(DATA=NULL)
 {
   DATA<-.Call("deepcopy_c", DATA)
